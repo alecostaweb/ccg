@@ -10,6 +10,14 @@
     
     @include('flash')
 
+    <style>
+    .table-hover td:hover {
+        background-color: #f39c12;
+        color: #fff;
+        cursor: pointer;
+    }
+    </style>
+    
     <div class="box box-primary">
         <form id="busca" role="form" method="post" action"/buscaReplicado">
             {{ csrf_field() }} 
@@ -83,23 +91,19 @@
 
 @section('js')
 
-<script type="text/javascript">
-
-$('#codpes').on('keypress', function() { 
-    if ($('#codpes').val().length > 5) {
-        $.get("busca/" + $('#codpes').val(), function(data) {
-            $('#alunos').empty();
-            $.each(data, function(i, value) {
-                var tr = $("<tr onclick=$('#codpes').val(" + value.codpes + ");$('#alunos').empty();$('#busca').submit(); />");
-                    tr.append($("<td/>", {
-                    text : value.nompes
-                }))
-                $('#alunos').append(tr);
-                console.log(tr);
-            });
+    <script type="text/javascript">
+        $('#codpes').on('keypress', function() {
+            $.get("busca/" + $('#codpes').val(), function(data) {
+                $('#alunos').empty();
+                $.each(data, function(i, value) {
+                    var tr = $("<tr onclick=$('#codpes').val(" + value.codpes + ");$('#alunos').empty();$('#busca').submit(); />");
+                        tr.append($("<td/>", {
+                            text : value.nompes
+                        }))
+                    $('#alunos').append(tr);
+                });
+            })
         })
-    }
-})
+    </script>
 
-</script>
 @stop
